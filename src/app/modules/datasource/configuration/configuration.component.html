@@ -1,0 +1,14 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <c-data-table
+                    [headers]="headersTable"
+                    [service]="service"
+                    [class]="'p-datatable-sm'">
+                <ng-template let-data tableRow="type">
+                    <p-tag [value]="data.type" [severity]="data.type| severity"></p-tag>
+                </ng-template>
+            </c-data-table>
+        </div>
+    </div>
+</div>

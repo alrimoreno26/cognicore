@@ -1,0 +1,82 @@
+:host ::ng-deep {
+    .p-orderlist .p-orderlist-controls {
+        display: none !important;
+    }
+    .h-with-scroll{
+        max-height: 200px;
+        overflow-y: auto;
+    }
+    #punto {
+        width: 5px;
+        height: 5px;
+        background-color: #3ea6ff;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .bg-text-initial{
+        background-color: #fafafc;
+    }
+    .box-generate{
+        background-color: #fafafc;
+        border: 1px solid #ffffff5e;
+    }
+    .p-accordion .p-accordion-header .p-accordion-header-link {
+        padding: 0.5rem 1.25rem;
+        background-color: #212123;
+        border: 1px solid #ffffff5e;
+        color: white;
+    }
+    .p-accordion .p-accordion-header .p-accordion-header-link.active {
+        background: #34a853;
+    }
+    button.btn-round-custom.p-button.p-button-icon-only.p-button-lg.p-button-raised.p-button-rounded.p-button-text.p-component.p-element.p-ripple:hover {
+        background: linear-gradient(to right, #10abe3 0%, #00d087 100%) !important;
+        color: #ffffff !important;
+    }
+    .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+        background-color: #212123;
+        border: 1px solid #ffffff5e;
+        color: white;
+        border-left: 4px solid #34a853 !important;
+    }
+    .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link{
+        background-color: #34a853;
+        border: 1px solid #ffffff5e;
+        color: white;
+        border-radius: 6px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .p-accordion-content{
+        padding: 0;
+        background-color: #ececf1;
+        border: transparent;
+        color: black;
+    }
+    .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus{
+        box-shadow: unset;
+    }
+    .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+        display: none;
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded {
+        width: 3rem !important;
+        height: 3rem !important;
+        background-color: #ffffff !important;
+        border: 1px solid #ffffff;
+        color: black
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded.p-active {
+        width: 2.2rem;
+        height: 2.2rem;
+        background-color: #17181C !important;
+        border: 1px solid #3ea6ff;
+    }
+
+    .p-active > span.mdi.mdi-check {
+        color: #3ea6ff;
+        font-size: 1.2rem !important;
+    }
+}

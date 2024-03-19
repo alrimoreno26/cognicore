@@ -1,0 +1,12 @@
+<div class="flex flex-column align-items-center border-bottom-1 surface-border p-6">
+    <span class="text-900 text-xl font-semibold mt-4">TEST</span>
+</div>
+<div class="w-full flex row-gap-4 flex-column surface-border p-4">
+    <span class="p-input-icon-left w-full">
+        <i class="pi pi-search"></i>
+        <input id="search" type="text" pInputText placeholder="Search" class="w-full" [(ngModel)]="searchValue" (input)="filter()"/>
+    </span>
+    <div class="flex flex-row gap-4 md:flex-column overflow-auto">
+        <app-user-card *ngFor="let user of filteredUsers" [user]="user"></app-user-card>
+    </div>
+</div>

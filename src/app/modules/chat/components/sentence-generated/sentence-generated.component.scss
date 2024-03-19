@@ -1,0 +1,97 @@
+:host ::ng-deep {
+    #punto {
+        width: 5px;
+        height: 5px;
+        background-color: #3ea6ff;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .box-generate {
+        background-color: #fafafc;
+        border: 1px solid #ffffff5e;
+    }
+
+    .p-accordion .p-accordion-header .p-accordion-header-link {
+        padding: 0.5rem 1.25rem;
+        background-color: #212123;
+        border: 1px solid #ffffff5e;
+        color: white;
+    }
+
+    .activeAccordionCheck{
+        padding: 0.5rem 1.25rem;
+        background-color: #34a853 !important;
+        border: 1px solid #34a853;
+        color: white;
+    }
+
+    button.btn-round-custom.p-button.p-button-icon-only.p-button-lg.p-button-raised.p-button-rounded.p-button-text.p-component.p-element.p-ripple:hover {
+        background: linear-gradient(to right, #10abe3 0%, #00d087 100%) !important;
+        color: #ffffff !important;
+    }
+
+    .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+        background-color: #212123;
+        border: 1px solid #ffffff5e;
+        color: white;
+        border-left: 4px solid #34a853 !important;
+    }
+
+    .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+        background-color: black;
+        border: 1px solid #ffffff5e;
+        color: white;
+        border-bottom-right-radius: 6px;
+        border-bottom-left-radius: 6px;
+    }
+
+    .p-accordion-content {
+        background-color: transparent;
+        border: transparent;
+        color: white;
+        padding: 0;
+    }
+
+    .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+        box-shadow: unset;
+    }
+
+    .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+        display: none;
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded {
+        width: 3rem !important;
+        height: 3rem !important;
+        background-color: #ffffff;
+        border: 1px solid #ffffff;
+        color: black
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded.active {
+        background-color: #34a853 !important;
+        border: 1px solid #34a853;
+        color: white;
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded.p-active {
+        width: 2.2rem;
+        height: 2.2rem;
+    }
+
+    .p-active > span.mdi.mdi-check {
+        color: #3ea6ff;
+        font-size: 1.2rem !important;
+    }
+    button.p-ripple.p-element.p-button-rounded.btn-round-custom.p-button-text.p-button-raised.p-button.p-component.p-button-icon-only:hover {
+        background-color: black;
+        color: white;
+        border: 1px solid black;
+    }
+    .p-button.p-button-icon-only.p-button-rounded.active:hover {
+        background-color: #34a853 !important;
+        border: 1px solid #34a853 !important;
+        color: white;
+    }
+}

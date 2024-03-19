@@ -1,0 +1,38 @@
+<div class="flex flex-column flex-wrap justify-content-center card-container blue-container align-items-center gap-5"
+     style="min-height: 87vh">
+
+
+    <div
+        class="border-2 bg-white border-gray-200 flex flex-column font-bold h-6rem justify-content-center max-w-45rem p-4 pl-2 text-white w-full"
+        style="border-radius: 10px">
+        <h5 class="mb-0 font-bold">Tip of day:</h5>
+        <p class="font-semibold m-0 text-gray-500 text-xl">Try asking about the sales of a certain product</p>
+    </div>
+    <div class="flex flex-wrap card-container blue-container max-w-45rem gap-5">
+        <div (click)="goto('datasource')" [ngClass]="{ 'borderActive': isHoveredS }" (mouseenter)="isHoveredS = true"
+             (mouseleave)="isHoveredS = false"
+             class="dashBox cursor-pointer flex flex-column flex-1 justify-content-center font-bold text-white p-2">
+            <h5 class="mb-0 font-bold" style="font-size: 16px">Setting</h5>
+            <p class="font-semibold m-0 text-gray-500" style="font-size: 14px">Connection with data sources</p>
+        </div>
+        <div (click)="goto('branding')" [ngClass]="{ 'borderActive': isHoveredB }" (mouseenter)="isHoveredB = true"
+             (mouseleave)="isHoveredB = false"
+             class="dashBox flex flex-column flex-1 justify-content-center font-bold text-white p-2 cursor-pointer">
+            <h5 class="mb-0 font-bold" style="font-size: 16px">Branding</h5>
+            <p class="font-semibold m-0 text-gray-500" style="font-size: 14px">Create unique and smart brands</p>
+        </div>
+        <div (click)="goto('chat')" [ngClass]="{ 'borderActive': isHoveredI }" (mouseenter)="isHoveredI = true"
+             (mouseleave)="isHoveredI = false"
+             class="dashBox cursor-pointer flex flex-column flex-1 justify-content-center font-bold text-white p-2">
+            <h5 class="mb-0 font-bold" style="font-size: 16px">Inquiries</h5>
+            <p class="font-semibold m-0 text-gray-500" style="font-size: 14px">Understand your bussiness in the simplest way</p>
+        </div>
+        <div (click)="goto('chat')" [ngClass]="{ 'borderActive': isHoveredC }" (mouseenter)="isHoveredC = true"
+             (mouseleave)="isHoveredC = false"
+             class="dashBox cursor-pointer flex flex-column flex-1 justify-content-center font-bold text-white p-2">
+            <h5 class="mb-0 font-bold" style="font-size: 16px">Creativity assistant</h5>
+            <p class="font-semibold m-0 text-gray-500" style="font-size: 14px">Ultra personalized creatives and campaigns</p>
+        </div>
+    </div>
+
+</div>

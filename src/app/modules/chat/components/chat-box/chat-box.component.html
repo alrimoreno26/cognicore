@@ -1,0 +1,172 @@
+<div class="flex flex-column" style="height: 87vh;">
+    <div class="p-3 md:px-4 lg:px-6 lg:py-4 mt-2 overflow-y-auto" style="max-height: 100vh;" #chatWindow>
+        <div *ngFor="let message of chatService.listEntities$ | async; let i = index">
+
+            <div *ngIf="message.fromRobots" class="grid grid-nogutter"
+                 [ngClass]="{'mb-4': typeOfResponse(message.msg) !== 'ARRAY'}">
+                <div class="col" [ngClass]="{'mt-3': typeOfResponse(message.msg) !== 'ARRAY'}">
+                    <div
+                        class="text-700 inline-block font-medium surface-border white-space-normal border-round"
+                        style="word-break: break-word; max-width:80%;">
+                        <div *ngIf="typeOfResponse(message.msg) ==='TEXT'"
+                             [ngClass]="{'flex-column': message?.grafica !== '', 'align-items-center gap-2':message?.grafica === ''}"
+                             class="p-3 mb-0 from_robots_{{message.fromRobots}} flex justify-content-between">
+                            <pre class="my-pre my-0">{{message.msg.trim()}}</pre>
+                            <div class="flex align-items-center h-full flex-column" *ngIf="message.grafica !== ''">
+                                <img src="{{message.grafica}}" alt="{{message.grafica}}"
+                                     style="max-width: 100%; margin: auto;">
+                            </div>
+                            <ng-template
+                                [ngIf]="!message.generating && messages[i]?.response?.length> 0 && disabledSave()">
+                                <button [disabled]="!btnStop" label="Check All" class="p-button-outlined" pButton
+                                        pRipple (click)="checkAll(message.step)"></button>
+                            </ng-template>
+                            <ng-template
+                                [ngIf]="!message.generating && messages[i]?.response?.length> 0 && !disabledSave()">
+                                <button [disabled]="!btnStop" label="Uncheck All" class="p-button-outlined" pButton
+                                        pRipple (click)="uncheckAll(message.step)"></button>
+                            </ng-template>
+                        </div>
+                        <ng-template
+                            [ngIf]="message.target_option !== undefined && message.target_option.length > 0 && message.type === 'SELECTION_CONTENT'">
+                            <div class="option-radios col pt-0 flex flex-column gap-1"
+                                 style="background-color:#ececf1;max-height: 100px;overflow-y: auto;">
+                                <p class="text-black mb-0 font-bold">Select one: </p>
+                                <div *ngFor="let category of message.target_option" class="field-checkbox mb-0">
+                                    <p-radioButton [inputId]="category" name="category" [value]="category"
+                                                   (onClick)="clickSelectRadio(message.step, i, $event)"
+                                                   [disabled]="message.selectedResponse !== ''"
+                                                   [(ngModel)]="message.selectedResponse"></p-radioButton>
+                                    <label [for]="category" class="ml-2 text-black">{{ category }}</label>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template [ngIf]="!messages[i]?.generating && messages[i]?.response?.length> 0">
+                            <div class="chat-element-accordion">
+                                <sentence-generated [sentences]="messages[i].response" [state]="message.status"
+                                                    [domain]="messages[0].brand"
+                                                    (checkedSentences)="checkedSentence($event)"
+                                                    (modifyCampaign)="modifyCampaign($event, i)"></sentence-generated>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="message.fromRobots && message.generating" class="grid grid-nogutter"
+                 [ngClass]="{'mb-4': typeOfResponse(message.msg) !== 'ARRAY'}" style="margin-top: -30px">
+                <div class="col" [ngClass]="{'mt-3': typeOfResponse(message.msg) !== 'ARRAY'}">
+                    <div
+                        class="text-700 inline-block font-medium surface-border white-space-normal border-round"
+                        style="word-break: break-word; max-width:80%;">
+                        <div *ngIf="typeOfResponse(message.msg) ==='TEXT'"
+                             class="p-3 mb-0 from_robots_{{message.fromRobots}} flex flex-column gap-2 justify-content-between">
+                            <p class="mb-0" *ngIf="selectedResonance.length > 0"> {{getDimensionsGeneration()}}</p>
+                            <p class="mb-0">If you want to make any adjustments in the campaign we are on time, if not
+                                simple write "ok"</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!message.fromRobots && message.showMessage" class="grid grid-nogutter">
+                <div class="col mt-3 text-right">
+                    <span
+                        class="inline-block text-left border-1 surface-border bc_chat text-white p-3 white-space-normal border-round"
+                        style="word-break: break-word; max-width:80%;">{{message.msg}}</span>
+                </div>
+            </div>
+        </div>
+        <ng-template
+            [ngIf]="(chatService.waiting$| async | asyncBool) || (chatService.receivingSocket$ | async | asyncBool)">
+            <div class="grid grid-nogutter mb-4">
+                <div class="col mt-3">
+                    <ng-lottie
+                        width="50px"
+                        height="50px"
+                        [options]="options"
+                    ></ng-lottie>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    <div class="p-3 pb-0 flex flex-column sm:flex-row align-items-center mt-auto gap-3">
+        <div class="flex flex-1 flex-column container-chat">
+            <div class="flex align-items-center gap-3 m-1 justify-content-between">
+                <div class="flex align-items-center gap-5">
+                    <div class="pl-4">
+                        <p-multiSelect [options]="optionsCustomization"
+                                       [filter]="false"
+                                       [(ngModel)]="selectedResonance"
+                                       (onChange)="onChangeSelectedResonance($event)"
+                                       [disabled]="(chatService.receivingSocket$ | async | asyncBool) || (chatService.onlyText$ | async | asyncBool)"
+                                       defaultLabel="Resonance Level"
+                                       styleClass="dpadding"
+                                       optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+                    <div>
+                        <p-multiSelect [options]="optionsExternalData"
+                                       [filter]="false"
+                                       [(ngModel)]="selectedExternal"
+                                       [disabled]="true"
+                                       defaultLabel="External Data"
+                                       styleClass="dpadding"
+                                       optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+                    <div>
+                        <p-multiSelect [options]="optionsFilters"
+                                       [filter]="false"
+                                       [(ngModel)]="selectedFilters"
+                                       [disabled]="true"
+                                       defaultLabel="Filters"
+                                       styleClass="dpadding"
+                                       optionLabel="name" display="chip"></p-multiSelect>
+                    </div>
+                    <div class="flex align-items-center">
+                        <p class="mb-1" style="font-size: 12px;color: #848484;">Visuals</p>
+                        <p-inputSwitch [(ngModel)]="checked" [style]='switchStyles'
+                                       [disabled]="(chatService.receivingSocket$ | async | asyncBool) || (chatService.onlyText$ | async | asyncBool)">
+
+                        </p-inputSwitch>
+                    </div>
+                </div>
+                <div class="pr-3">
+                    <p class="mb-0" style="font-size: 12px;color: #848484;">Monthly Limit: {{10000|number}}</p>
+                </div>
+
+            </div>
+            <span class="p-input-icon-right w-auto flex-1">
+                <input class="pl-5 flex-1 w-full border-round-3xl"
+                       id="message"
+                       placeholder="Let's talk"
+                       [(ngModel)]="textContent"
+                       (keydown.enter)="sendMessage()"
+                       [disabled]="(chatService.receivingSocket$ | async | asyncBool)"
+                       type="text"
+                       pInputText/>
+                <i class="pi pi-send send-cognicore" (click)="sendMessage()" style="transform: rotate(45deg)"></i>
+            </span>
+        </div>
+        <div class="flex flex-column pt-3 sm:w-auto w-full">
+            <div class="flex align-items-center gap-3 m-2 mb-0 justify-content-center">
+                <div class="flex gap-2">
+                    <div><p class="mb-0" style="font-size: 12px;color: #848484;">Stop</p></div>
+                    <div><p class="mb-0" style="font-size: 12px;color: #848484;">Refresh</p></div>
+                    <div><p class="mb-0" style="font-size: 12px;color: #848484;">Save</p></div>
+                </div>
+            </div>
+            <div>
+                <span class="p-buttonset">
+                    <button style="padding: 11px" class="btn-chat left px-4" pButton pRipple icon="pi pi-stop-circle"
+                            [disabled]="btnStop|| (chatService.receivingSocket$ | async | asyncBool)"></button>
+                    <button style="padding: 11px" class="btn-chat px-4" pButton pRipple icon="pi pi-refresh"
+                            [disabled]="(chatService.receivingSocket$ | async | asyncBool)"
+                            (click)="refresh()"></button>
+                    <button style="padding: 11px" class="btn-chat right px-4" pButton pRipple icon="pi pi-save"
+                            [disabled]="disabledSave()|| (chatService.receivingSocket$ | async | asyncBool)"
+                            (click)="saveGeneration()"></button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,327 @@
+<div id="register" class="flex h-screen">
+    <div
+        class="w-6 hidden lg:flex flex-column justify-content-between align-items-center px-6 py-6 bg-cover bg-norepeat">
+        <div class="login-first-column hidden h-full flex flex-column z-1">
+
+            <div class="h-full flex align-items-center gap-2">
+
+                <ng-container *ngIf="activeIndex === 0" [class]="'fadeinright'">
+                    <div
+                        class="-intro-x-text dark:text-slate-400 text-4xl text-lg text-opacity-70 text-white flex align-items-start gap-2">
+                        <img alt="cognicore-init" src="../../../assets/images/register/isotipo.png"
+                             style="width: 50px;">
+                        <p class="bg-white border-round-2xl p-5 text-3xl text-black-alpha-80 onboarding_chat"
+                           style="border-top-left-radius: 0 !important;margin-top:15px">
+                            The "business" is the owner of the brand or brands that will be grow within the platform
+                        </p>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeIndex === 1" [class]="'fadeinright'">
+                    <div
+                        class="-intro-x-text dark:text-slate-400 text-4xl text-lg text-opacity-70 text-white flex align-items-start gap-2">
+                        <img alt="cognicore-init" src="../../../assets/images/register/isotipo.png"
+                             style="width: 50px;">
+                        <p class="bg-white border-round-2xl p-5 text-3xl text-black-alpha-80 onboarding_chat"
+                           style="border-top-left-radius: 0 !important;margin-top:15px">
+                            The brand is the beginning of everything, let's start by configuring its identity
+                        </p>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeIndex===2 || activeIndex===3" [class]="'fadeinright'">
+                    <div
+                        class="-intro-x-text dark:text-slate-400 text-4xl text-lg text-opacity-70 text-white flex align-items-start gap-2">
+                        <img alt="cognicore-init" src="../../../assets/images/register/isotipo.png"
+                             style="width: 50px;">
+                        <p class="bg-white border-round-2xl p-5 text-3xl text-black-alpha-80 onboarding_chat"
+                           style="border-top-left-radius: 0 !important;margin-top:15px">
+                            Feed your smartbrand with data and enjoy watching it help you save time and grow
+                        </p>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="activeIndex===100" [class]="'fadeinright'">
+                    <div class="-intro-x-text dark:text-slate-400 text-4xl text-lg text-opacity-70 text-white">
+                        <img alt="cognicore-init" src="../../../assets/images/register/cognicore_vertical_text.png"
+                             style="width: 250px;padding-bottom: 50px">
+                    </div>
+                </ng-container>
+            </div>
+            <div class="-intro-x flex items-center justify-content-end" *ngIf="activeIndex!==100">
+                <img class="cursor-pointer mr-8" src="../../../assets/images/register/cognicore_blanco_text.png"
+                     alt="cognicore-logo" width="100px">
+            </div>
+        </div>
+    </div>
+    <div class="w-full lg:w-7 h-full text-center px-6 py-6 flex flex-column justify-content-between">
+        <div class="flex flex-column align-items-center">
+
+        </div>
+        <div class="flex flex-column align-items-center gap-4">
+            <!--            CREAR BUSINESS-->
+            <div *ngIf="activeIndex === 0" class="flex flex-column fadeinright">
+                <form [formGroup]="businessForm">
+                    <h1>{{"labels.title_onboarding" | translate}}</h1>
+                    <div class="field field-input col-12 text-left">
+                        <label for="businessName">{{"labels.name" | translate}}</label>
+                        <input pInputText id="businessName"
+                               aria-describedby="name_populations"
+                               formControlName="name"
+                               placeholder="{{'labels.name_placeholder' | translate}}"
+                               class="p-component p-element w-full text size-12 secondary"/>
+                    </div>
+                    <div class="field field-input col-12 text-left">
+                        <label for="description">{{"labels.description" | translate}}</label>
+                        <input pInputText id="description"
+                               aria-describedby="email_input"
+                               formControlName="description"
+                               placeholder="{{'labels.description_placeholder' | translate}}"
+                               class="p-component p-element w-full text size-12 secondary"/>
+                    </div>
+                </form>
+            </div>
+            <!--            CREAR MARCA-->
+            <div *ngIf="activeIndex === 1" class="flex flex-column fadeinright">
+                <form [formGroup]="brandForm">
+                    <div *ngIf="brandIndex === 10">
+                        <h1>{{"labels.title_onboarding_brand_personalized" | translate}}</h1>
+                        <div class="text-left">
+                            <label for="brandName">{{"labels.brand_name" | translate}}</label>
+                            <input pInputText id="brandName"
+                                   aria-describedby="name_populations"
+                                   formControlName="name"
+                                   placeholder="{{'labels.brand_name_placeholder' | translate}}"
+                                   class="p-component p-element w-full text size-12 secondary"/>
+                        </div>
+                        <div class="pt-5 align-items-start flex flex-column">
+                            <div class="position-relative">
+                                <h4 class="line_break text-center font-semibold">What is the context
+                                    where {{brandForm.get('name').value}} operates?</h4>
+                            </div>
+                            <div class="flex flex-row flex-wrap gap-3" style="max-height: 300px; overflow-y: auto;">
+                                <div class="p-chip" *ngFor="let control of context; let i=index">
+                                    <p-radioButton name="domain" [value]="control.value"
+                                                   formControlName="domain"
+                                                   inputId="{{control.key}}"></p-radioButton>
+                                    <label for="{{control.key}}" class="ml-2 text-left">{{control.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="py-5 align-items-start flex flex-column">
+                            <div class="position-relative">
+                                <h4 class="line_break text-center font-semibold">In what age range do you place your
+                                    brand?</h4>
+                            </div>
+                            <div class="flex flex-row flex-wrap gap-3 justify-content-center">
+                                <div class="p-chip" *ngFor="let control of ages; let i=index">
+                                    <p-radioButton name="age" [value]="control.value"
+                                                   formControlName="age"
+                                                   inputId="{{control.key}}"></p-radioButton>
+                                    <label for="{{control.key}}" class="ml-2 text-left">{{control.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="align-items-start flex flex-column">
+                            <div class="position-relative">
+                                <h4 class="line_break text-center font-semibold">What gender category best aligns with
+                                    your
+                                    brand?</h4>
+                            </div>
+                            <div class="flex flex-row flex-wrap gap-3 justify-content-center">
+                                <div class="p-chip" *ngFor="let control of gender; let i=index">
+                                    <p-radioButton name="gender" [value]="control.value"
+                                                   formControlName="gender"
+                                                   inputId="{{control.key}}"></p-radioButton>
+                                    <label for="{{control.key}}" class="ml-2 text-left">{{control.name}}</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="brandIndex === 11" class="text-left">
+                        <h4>{{"labels.title_onboarding_brand_facet" | translate}}</h4>
+                        <p-orderList [value]="facets" [listStyle]="{ 'max-height': '30rem' }" [dragdrop]="true">
+                            <ng-template pTemplate="header">
+                                <h3 class="mb-0">{{'labels.title_onboarding_brand_sub_facet' | translate}}</h3>
+                            </ng-template>
+                            <ng-template let-product let-i="index" pTemplate="item">
+                                <div class="flex align-items-center p-2 w-full flex-wrap">
+                                    <div class="flex-1">
+                                        <h5 class="mb-2">{{ i + 1 }}-{{ product.value }}</h5>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-orderList>
+                    </div>
+                </form>
+            </div>
+            <!--      STEP SELECCIONAR CRM-->
+            <div *ngIf="activeIndex === 2" class="fadeinright mx-4 flex-column steps">
+                <ng-template [ngIf]="!configCRM" [ngIfElse]="configCrm">
+                    <div class="position-relative mb-3">
+                        <h3 class="line_break text-center">Do you use any of the following CRMs?</h3>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-3 justify-content-center">
+                        <div *ngFor="let control of dataSourceCRM; let i=index" class="p-chip">
+                            <p-radioButton id="selectedCRM" name="selectedCRM" [value]="control"
+                                           [(ngModel)]="selectedCRM"
+                                           (click)="selectedConfigCRM()"
+                                           inputId="selectedCRM"></p-radioButton>
+                            <label for="selectedCRM" class="ml-2 text-left">{{control.name}}</label>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #configCrm>
+                    <div class="flex align-items-center justify-content-center gap-3 mb-3">
+                        <!--                        <p-button icon="pi pi-arrow-circle-left mdi-24px"-->
+                        <!--                                  styleClass="p-button-sm px-3 py-0"-->
+                        <!--                                  (click)="selectedConfigCRM()"></p-button>-->
+                        <h3 class="line_break text-center">Let's configure your CRM</h3>
+                    </div>
+                    <div class="flex flex-column">
+                        <form [formGroup]="formCRM">
+                            <div class="field field-input col-12 text-left  mb-0"
+                                 *ngFor="let field of selectedCRM.properties">
+                                <label for="businessName">{{field.nameShow}}</label>
+                                <ng-template [ngIf]="field.name ==='password'" [ngIfElse]="other">
+                                    <p-password [inputStyleClass]="'w-full'"
+                                                styleClass="w-full"
+                                                class="w-full text size-12 secondary"
+                                                id="{{field.name}}" [formControlName]="field.name"
+                                                [toggleMask]="true"></p-password>
+                                </ng-template>
+                                <ng-template #other>
+                                    <input pInputText id="{{field.name}}"
+                                           [formControlName]="field.name"
+                                           [disabled]="field.nameShow === 'Type'"
+                                           class="p-component p-element w-full text size-12 secondary"/>
+                                </ng-template>
+
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+            </div>
+            <!--      STEP SELECCIONAR CMS-->
+            <div *ngIf="activeIndex === 3" class="fadeinright mx-4 flex-column steps">
+                <ng-template [ngIf]="!configCMS" [ngIfElse]="configCms">
+                    <div class="position-relative mb-3">
+                        <h3 class="line_break text-center">Do you use any of the following CMS?</h3>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-3 justify-content-center">
+                        <div *ngFor="let control of dataSourceCMS; let i=index" class="p-chip">
+                            <p-radioButton id="selectedCSM" name="selectedCSM" [value]="control"
+                                           [(ngModel)]="selectedCMS"
+                                           (click)="selectedConfigCMS()"
+                                           inputId="selectedCSM"></p-radioButton>
+                            <label for="selectedCSM" class="ml-2 text-left">{{control.name}}</label>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template #configCms>
+                    <div class="flex align-items-center justify-content-center gap-3 mb-3">
+                        <!--                        <p-button icon="pi pi-arrow-circle-left mdi-24px"-->
+                        <!--                                  styleClass="p-button-sm px-3 py-0"-->
+                        <!--                                  (click)="selectedConfigCMS()"></p-button>-->
+                        <h3 class="line_break text-center">Let's configure your CMS</h3>
+                    </div>
+                    <div class="flex flex-column">
+                        <form [formGroup]="formCMS">
+                            <div class="field field-input col-12 text-left mb-0"
+                                 *ngFor="let field of selectedCMS.properties">
+                                <label for="businessName">{{field.nameShow}}</label>
+                                <ng-template [ngIf]="field.name ==='password'" [ngIfElse]="other">
+                                    <p-password [inputStyleClass]="'w-full'"
+                                                styleClass="w-full"
+                                                class="w-full text size-12 secondary"
+                                                id="{{field.name}}" [formControlName]="field.name"
+                                                [toggleMask]="true"></p-password>
+                                </ng-template>
+                                <ng-template #other>
+                                    <input pInputText id="{{field.name}}"
+                                           [formControlName]="field.name"
+                                           class="p-component p-element w-full text size-12 secondary"/>
+                                </ng-template>
+                            </div>
+                        </form>
+                    </div>
+                </ng-template>
+
+            </div>
+            <div *ngIf="activeIndex === 100" class="fadeinright mx-4 flex-column steps">
+                <ng-template [ngIf]="loadingBrand === 1 && loadingDatasource === 1 && loadingBusiness === 1"
+                             [ngIfElse]="creatingInfo">
+                    <h1>Your basic configuration is ready, let's start</h1>
+                    <button pButton pRipple class="p-button p-component text mt-5" (click)="start()">Start</button>
+                </ng-template>
+                <ng-template #creatingInfo>
+                    <h2 class="mb-8">We are creating all your configurations</h2>
+                    <div class="flex flex-column gap-4">
+                        <div class="flex align-items-center justify-content-between">
+                            <h4 class="mb-0">Creating the business {{businessForm.controls['name'].value}}</h4>
+                            <div>
+                                <i class="pi pi-spin pi-spinner text-blue-500" *ngIf="!business.businessRegisterStep$()"
+                                   style="font-size: 2rem"></i>
+                                <i class="pi pi-check-circle text-blue-500" *ngIf="business.businessRegisterStep$()"
+                                   style="font-size: 2rem"></i>
+                            </div>
+                        </div>
+                        <div class="flex align-items-center justify-content-between">
+                            <h4 class="mb-0">Creating the brand {{brandForm.controls['name'].value}}</h4>
+                            <div>
+                                <ng-template [ngIf]="loadingBrand === 0">
+                                    <i class="pi pi-spin pi-spinner text-blue-500" style="font-size: 2rem"></i>
+                                </ng-template>
+                                <ng-template [ngIf]="loadingBrand === -1">
+                                    <i class="pi pi-clock text-gray-700" style="font-size: 2rem"></i>
+                                </ng-template>
+                                <i class="pi pi-check-circle text-blue-500"
+                                   *ngIf="loadingBrand === 1"
+                                   style="font-size: 2rem"></i>
+                            </div>
+                        </div>
+                        <div class="flex align-items-center justify-content-between">
+                            <h4 class="mb-0">Creating the data sources</h4>
+                            <div>
+                                <i class="pi pi-spin pi-spinner text-blue-500" *ngIf="loadingDatasource === 0"
+                                   style="font-size: 2rem"></i>
+                                <i class="pi pi-clock text-gray-700" *ngIf="loadingDatasource === -1"
+                                   style="font-size: 2rem"></i>
+                                <i class="pi pi-check-circle text-blue-500"
+                                   *ngIf="loadingDatasource === 1"
+                                   style="font-size: 2rem"></i>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-content-center">
+                <div class="flex pr-2 justify-content-center" *ngIf="activeIndex > 0 && activeIndex !== 100">
+                    <button pButton pRipple label="<"
+                            class="p-button p-component text"
+                            id="backBtn"
+                            (click)="backRegisterStep()">
+                        <span class="p-ink"></span>
+                    </button>
+                </div>
+                <div class="flex pr-2 justify-content-center" *ngIf="activeIndex === 2 || activeIndex === 3">
+                    <button pButton pRipple label="Omitir" class="p-button p-component text"
+                            (click)="omitStep()">
+                        <span class="p-ink"></span>
+                    </button>
+                </div>
+                <div class="flex pr-2 justify-content-center">
+                    <button pButton pRipple label=">" class="p-button p-component text"
+                            id="nextBtn"
+                            [disabled]="checkState()"
+                            *ngIf="activeIndex !== 100"
+                            (click)="nextRegisterStep()">
+                        <span class="p-ink"></span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <input class="hidden" [(ngModel)]="nameStep">
+</div>

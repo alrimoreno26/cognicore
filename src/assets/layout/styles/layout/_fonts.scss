@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'RedHatDisplay';
+    font-style: normal;
+    font-weight: 300;
+    src: local('RedHatDisplay Light'), local('RedHatDisplay-Light'),
+    url("../../fonts/redhat/RedHatDisplay-Light.ttf") format('truetype')
+}
+@font-face {
+    font-family: 'RedHatDisplay';
+    font-style: normal;
+    font-weight: 400;
+    src: local('RedHatDisplay Regular'), local('RedHatDisplay-Regular'),
+    url("../../fonts/redhat/RedHatDisplay-Regular.ttf") format('truetype')
+}
+@font-face {
+    font-family: 'RedHatDisplay';
+    font-style: normal;
+    font-weight: 500;
+    src: local('RedHatDisplay Medium'), local('RedHatDisplay-Medium'),
+    url("../../fonts/redhat/RedHatDisplay-Medium.ttf") format('truetype')
+}
+@font-face {
+    font-family: 'RedHatDisplay';
+    font-style: normal;
+    font-weight: 600;
+    src: local('RedHatDisplay SemiBold'), local('RedHatDisplay-SemiBold'),
+    url("../../fonts/redhat/RedHatDisplay-SemiBold.ttf") format('truetype')
+}
+@font-face {
+    font-family: 'RedHatDisplay';
+    font-style: normal;
+    font-weight: 700;
+    src: local('RedHatDisplay Bold'), local('RedHatDisplay-Bold'),
+    url("../../fonts/redhat/RedHatDisplay-Bold.ttf") format('truetype')
+}

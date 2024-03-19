@@ -1,0 +1,21 @@
+<d-dialog-select-bussiness
+    [showDialog]="showDialogBusiness"
+(closeDialog)="close()">
+</d-dialog-select-bussiness>
+<div class="layout-wrapper" [ngClass]="containerClass" [class]="sidebarClass" >
+    <div class="layout-content-wrapper">
+        <app-topbar></app-topbar>
+        <div class="layout-content">
+            <ng-template >
+
+            </ng-template>
+            <app-breadcrumb></app-breadcrumb>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <div class="layout-mask">
+    </div>
+    <p-confirmDialog header="Confirmation" key="deleteElementMenu" icon="pi pi-exclamation-triangle"
+                     [style]="{width: '350px'}"></p-confirmDialog>
+</div>
+

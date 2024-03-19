@@ -1,0 +1,28 @@
+::ng-deep p-avatar {
+  .avatar_color {
+    background-color: rgba(101, 214, 173, 0.1);
+    color: rgb(25, 146, 212);
+    border: 1px solid rgb(94, 208, 250);
+  }
+}
+
+.container-project:hover {
+  cursor: pointer;
+}
+
+.newMBL {
+  margin-bottom: 8px;
+}
+
+.newPadding {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.otherPaddingTop {
+  padding-top: 10px !important;
+}
+
+.newPaddingBottom {
+  padding-bottom: 20px !important;
+}

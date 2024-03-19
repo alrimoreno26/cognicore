@@ -1,0 +1,262 @@
+<div class="flex flex-column md:flex-row">
+    <div class="flex-1 p-0">
+        <h2 class="text-center text-gray-400 pt-4">Brand Settings</h2>
+        <div class="flex flex-column" style="height: 80vh;">
+            <div class="p-3 md:px-4 lg:px-6 lg:py-4 mt-2 overflow-y-auto" style="max-height: 100vh;" #chatWindow
+                 [scrollTop]="chatWindow.scrollHeight">
+                <div>
+                    <form [formGroup]="brandForm">
+                        <div class="grid grid-nogutter mb-4">
+                            <div class="col mt-3">
+                                <div
+                                    class="text-700 inline-block font-medium from_robots_true surface-border white-space-normal border-round"
+                                    style="word-break: break-word; max-width:80%;">
+                                    <div class="mb-0 from_robots p-3">What is the name of your brand?</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-nogutter mb-4" *ngIf="active_dropdown">
+                            <div class="col mt-3 text-right">
+                                <span
+                                    class="inline-block text-left font-medium border-1 surface-border bc_chat text-white p-3 white-space-normal border-round"
+                                    style="word-break: break-word; max-width:80%;">{{brand_name}}</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-nogutter mb-2" *ngIf="active_dropdown">
+                            <div class="col mt-3">
+                                <div
+                                    class="text-700 inline-block font-medium from_robots_true surface-border white-space-normal border-round"
+                                    style="word-break: break-word; max-width:80%;">
+                                    <div class="mb-0 from_robots p-3">Please complete all aspects of your brand. This process is important to establish a complete brand identity.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="active_dropdown" class="chat-element-accordion">
+                            <p-accordion class="w-full" (onOpen)="openAcocordion($event)">
+                                <p-accordionTab headerStyleClass="{{validAccordion('basic')}}">
+                                    <ng-template pTemplate="header">
+                                        <div class="align-items-center flex justify-content-between w-full">
+                                            <div class="flex align-items-center">
+                                                <p class="vertical-align-middle font-light">
+                                                    <span class="font-bold">Basic settings</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+                                        <div class="mb-0 text-black-alpha-90 from_robots p-3 bg-text-initial">What is
+                                            the
+                                            context
+                                            where {{brand_name}} operates?
+                                        </div>
+                                        <div class="pl-3 pt-3 flex">
+                                            <div class="flex flex-column h-with-scroll w-full">
+                                                <div *ngFor="let obj of context" class="field-checkbox mb-2">
+                                                    <p-radioButton [inputId]="obj.key" name="domain"
+                                                                   [value]="obj.value"
+                                                                   formControlName="domain"></p-radioButton>
+                                                    <label [for]="obj.key" class="ml-2">{{ obj.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 text-black-alpha-90 from_robots p-3 bg-text-initial"
+                                             *ngIf="!edit">
+                                            What is the source of your data?
+                                        </div>
+                                        <div class="col-12" *ngIf="!edit">
+                                            <div class="card">
+                                                <m-connections-modal [showSaveBtn]="false"></m-connections-modal>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-accordionTab>
+                                <p-accordionTab headerStyleClass="{{validAccordion('demographics')}}">
+                                    <ng-template pTemplate="header">
+                                        <div class="align-items-center flex justify-content-between w-full">
+                                            <div class="flex align-items-center">
+                                                <p class="vertical-align-middle font-light">
+                                                    <span class="font-bold">Demographics</span>
+                                                </p>
+                                            </div>
+                                            <div>
+                                            </div>
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+                                        <div class="mb-0 text-black-alpha-90 from_robots p-3 bg-text-initial">In what
+                                            age
+                                            range do you place
+                                            your brand?
+                                        </div>
+                                        <div class="pl-3  pt-3 flex">
+                                            <div class="flex flex-column h-with-scroll">
+                                                <div *ngFor="let control of ages" class="field-checkbox mb-2">
+                                                    <p-radioButton name="age" [value]="control.value"
+                                                                   formControlName="age"
+                                                                   inputId="{{control.key}}"></p-radioButton>
+                                                    <label [for]="control.key" class="ml-2">{{ control.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 text-black-alpha-90 from_robots p-3 bg-text-initial">What
+                                            gender
+                                            category best
+                                            aligns with your brand?
+                                        </div>
+                                        <div class="pl-3 pt-3 flex">
+                                            <div class="flex flex-column h-with-scroll">
+                                                <div *ngFor="let control of gender" class="field-checkbox mb-2">
+                                                    <p-radioButton name="gender" [value]="control.value"
+                                                                   formControlName="gender"
+                                                                   inputId="{{control.key}}"></p-radioButton>
+                                                    <label [for]="control.key" class="ml-2">{{ control.name }}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-accordionTab>
+                                <p-accordionTab headerStyleClass="{{validAccordion('facet')}}">
+                                    <ng-template pTemplate="header">
+                                        <div class="align-items-center flex justify-content-between w-full">
+                                            <div class="flex align-items-center">
+                                                <p class="vertical-align-middle font-light">
+                                                    <span class="font-bold">Personality</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+                                        <div class="mb-0 text-black-alpha-90 from_robots p-3 bg-text-initial">
+                                            {{"labels.title_onboarding_brand_facet" | translate}}
+                                        </div>
+                                        <div class="flex flex-auto justify-content-center">
+                                            <p-orderList [value]="facets" [listStyle]="{ 'max-height': '30rem' }"
+                                                         [dragdrop]="true">
+                                                <ng-template pTemplate="header">
+                                                    <h5 class="mb-0">{{'labels.title_onboarding_brand_sub_facet' | translate}}</h5>
+                                                </ng-template>
+                                                <ng-template let-product let-i="index" pTemplate="item">
+                                                    <div class="flex align-items-center p-2 w-full flex-wrap">
+                                                        <div class="flex-1">
+                                                            <p class="mb-2">{{ i + 1 }}-{{ product.value }}</p>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-orderList>
+                                        </div>
+                                    </ng-template>
+                                </p-accordionTab>
+                                <p-accordionTab [disabled]="true">
+                                    <ng-template pTemplate="header">
+                                        <div class="align-items-center flex justify-content-between w-full">
+                                            <div class="flex align-items-center">
+                                                <p class="vertical-align-middle font-light">
+                                                    <span class="font-bold">Competitors</span>
+                                                </p>
+                                            </div>
+                                            <div>
+                                            </div>
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+
+                                    </ng-template>
+                                </p-accordionTab>
+                                <p-accordionTab [disabled]="true">
+                                    <ng-template pTemplate="header">
+                                        <div class="align-items-center flex justify-content-between w-full">
+                                            <div class="flex align-items-center">
+                                                <p class="vertical-align-middle font-light">
+                                                    <span class="font-bold">Documents</span>
+                                                </p>
+                                            </div>
+                                            <div>
+                                            </div>
+
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="content">
+
+                                    </ng-template>
+                                </p-accordionTab>
+                            </p-accordion>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <div class="p-3 pb-0 flex flex-column sm:flex-row align-items-center mt-auto gap-3">
+                <div class="flex flex-1 flex-column container-chat">
+                    <div class="flex align-items-center gap-3 m-1 justify-content-between">
+                        <div class="flex gap-5">
+                            <div class="pl-4">
+                                <p-multiSelect [options]="optionsCustomization"
+                                               [filter]="false"
+                                               [(ngModel)]="selectedResonance"
+                                               defaultLabel="Resonance Level"
+                                               styleClass="dpadding"
+                                               optionLabel="name" display="chip"></p-multiSelect>
+                            </div>
+                            <div>
+                                <p-multiSelect [options]="optionsExternalData"
+                                               [filter]="false"
+                                               [(ngModel)]="selectedExternal"
+                                               [disabled]="true"
+                                               defaultLabel="External Data"
+                                               styleClass="dpadding"
+                                               optionLabel="name" display="chip"></p-multiSelect>
+                            </div>
+                            <div>
+                                <p-multiSelect [options]="optionsFilters"
+                                               [filter]="false"
+                                               [(ngModel)]="selectedFilters"
+                                               [disabled]="true"
+                                               defaultLabel="Filters"
+                                               styleClass="dpadding"
+                                               optionLabel="name" display="chip"></p-multiSelect>
+                            </div>
+                            <div class="flex align-items-center">
+                                <p class="mb-1" style="font-size: 12px;color: #848484;">Visuals</p>
+                                <p-inputSwitch [(ngModel)]="checked" [disabled]="true" [style]='switchStyles'></p-inputSwitch>
+                            </div>
+                        </div>
+                        <div class="pr-3">
+                            <p class="mb-0" style="font-size: 12px;color: #848484;">Monthly Limit: {{10000|number}}</p>
+                        </div>
+
+                    </div>
+                    <span class="p-input-icon-right w-auto flex-1">
+						<input class="flex-1 w-full border-round-3xl pl-5"
+                               id="message"
+                               placeholder="Let's talk"
+                               [disabled]="active_dropdown"
+                               [(ngModel)]="brand_name"
+                               (keydown.enter)="sendMessage()"
+                               type="text"
+                               pInputText/>
+						<i class="pi pi-send send-cognicore" (click)="sendMessage()" style="transform: rotate(45deg)"></i>
+					</span>
+                </div>
+                <div class="flex flex-column pt-3 sm:w-auto w-full">
+                    <div class="flex align-items-center gap-3 m-2 mb-0 justify-content-center">
+                        <div class="flex gap-2">
+                            <div><p class="mb-0" style="font-size: 12px;color: #848484;">Stop</p></div>
+                            <div><p class="mb-0" style="font-size: 12px;color: #848484;">Refresh</p></div>
+                            <div><p class="mb-0" style="font-size: 12px;color: #848484;">Save</p></div>
+                        </div>
+                    </div>
+                    <div>
+                <span class="p-buttonset">
+                    <button style="padding: 11px" class="btn-chat left px-4" pButton pRipple icon="pi pi-stop-circle"></button>
+                    <button style="padding: 11px" class="btn-chat px-4" pButton pRipple icon="pi pi-refresh" ></button>
+                    <button style="padding: 11px" class="btn-chat right" pButton pRipple icon="pi pi-save" (click)="saveBrand()"></button>
+                </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+{
+    "labels": {
+        "title_onboarding": "Let us know your business",
+        "title_onboarding_brand": "The brand is the beginning of everything",
+        "title_onboarding_brand_personalized": "Customize your brand",
+        "title_onboarding_brand_facet": "Rank the following groups of words from 1 to 5, with 1 being the most relevant, and 5 being the least relevant for you to complete the phrase:",
+        "title_onboarding_brand_sub_facet": "I want my brand to convey:",
+        "name": "Business Name",
+        "bussiness_name": "Business Name",
+        "brand_name": "Brand Name",
+        "name_placeholder": "Your business name",
+        "brand_name_placeholder": "Your brand name",
+        "description": "Business Description",
+        "brand_description": "Brand Description",
+        "description_placeholder": "Tell me something about your business",
+        "brand_description_placeholder": "Tell me something about your brand",
+        "color": "Color of your business"
+    }
+}

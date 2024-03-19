@@ -1,0 +1,88 @@
+:host::ng-deep {
+  .p-chip {
+    text-align: center;
+    background-color: white !important;
+    border: 1px solid #dee2e6 !important;
+    color: #495057;
+    border-radius: 5px;
+    padding: 0.5rem 0.75rem !important;
+  }
+    .p-orderlist .p-orderlist-controls {
+        display: none !important;
+    }
+}
+#register {
+  position: relative;
+  overflow: hidden;
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255/var(--tw-bg-opacity));
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  height: 100vh;
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: -28%;
+    margin-bottom: -15%;
+    margin-left: -13%;
+    width: 60%;
+    --tw-rotate: -4deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    border-radius: 100%;
+    background-color: #0077fd5c;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin-top: -20%;
+    margin-bottom: -12%;
+    margin-left: -13%;
+    width: 60%;
+    --tw-rotate: -4deg;
+    transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+    border-radius: 100%;
+    --tw-bg-opacity: 1;
+    background-color: #0077fd;
+  }
+}
+//.onboarding_chat{
+//  &:before {
+//    content: "";
+//    position: absolute;
+//    border: 14px solid transparent;
+//    border-right-color: white;
+//    border-top-color: white;
+//    left: 105px;
+//    top: 344px;
+//  }
+//}
+//@media  screen and (max-width: 1366px) {
+//  .onboarding_chat{
+//    &:before {
+//      top: 267px;
+//    }
+//  }
+//}
+
+@media (max-width: 767px) {
+  #register {
+    &:before {
+      content: "" !important;
+      display: none;
+    }
+
+    &:after {
+      content: "" !important;
+      display: none;
+    }
+  }
+}

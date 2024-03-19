@@ -1,0 +1,193 @@
+$gutter: 1rem; //for prime flex grid system
+
+/* Layout */
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Quill Text Editor for p-editor */
+@import "../node_modules/quill/dist/quill.core.css";
+@import "../node_modules/quill/dist/quill.snow.css";
+
+/* Insert css */
+@import "assets/styles/flags/flags.css";
+@import "assets/styles/badges.scss";
+@import "assets/styles/code.scss";
+
+
+/* Custom CSS */
+body {
+    background: #f5f6fc;
+    font-size: 16px;
+}
+
+.svg_logo {
+    position: absolute;
+    top: -4px;
+    left: -5px;
+}
+
+.bc_chat {
+    background-color: #4551a3 !important;
+}
+
+.p-multiselect-panel .p-multiselect-header {
+    background: #000000;
+}
+
+.max-w-45rem {
+    max-width: 50rem;
+}
+
+.layout-wrapper.layout-drawer .layout-sidebar .layout-menu .layout-root-menuitem > .layout-menuitem-root-text {
+    min-height: 2.3rem;
+}
+
+.layout-topbar .topbar-menu > li > a {
+    width: auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 100px 100px 100px 100px / 75px 75px 75px 75px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.layout-content {
+    padding-bottom: 1rem;
+}
+
+.layout-topbar {
+    border-bottom: unset;
+    background: #f5f6fc;
+}
+
+.layout-sidebar .logo {
+    border-bottom: unset;
+}
+
+.layout-sidebar {
+    background: #e9e9f3;
+    box-shadow: unset;
+}
+
+.layout-wrapper.layout-compact .layout-sidebar .layout-menu .layout-root-menuitem > ul {
+    background: #fafafc;
+}
+
+.layout-wrapper.layout-compact .layout-sidebar .layout-menu ul a.active-route {
+    background: var(--d-menuitem-hover-bg);
+}
+
+.pi-send:before {
+    font-size: 18px;
+}
+
+.send-cognicore {
+    background: #fafafc;
+    padding: 11px;
+    border-radius: 50px;
+    top: 10px !important;
+    right: 3px !important;
+}
+
+.container-chat {
+    background: #e9e9f3;
+    border-radius: 25px;
+    padding: 2px;
+}
+
+.cdk-drag {
+    cursor: pointer !important;;
+}
+
+.dpadding .p-multiselect-label-container .p-multiselect-label {
+    padding: 3px !important;
+}
+
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+    background: #34a853 !important;
+}
+
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+    background: #b6bfc8 !important;
+}
+
+.from_robots_true {
+    background: white;
+    color: black;
+    font-size: 16px;
+}
+
+.p-input-icon-right > .p-icon-wrapper {
+    right: 10px;
+}
+.dashBox{
+    min-width: 250px;
+    min-height: 85px;
+    border-radius: 10px;
+    background: #e9e9f3;
+}
+
+.borderActive{
+    border: 1px solid #0000009e;
+}
+
+#message {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    font-size: 16px;
+}
+
+.btn-chat {
+    background-color: #e9e9f3;
+    border-color: #e9e9f3;
+
+    span {
+        color: black;
+        font-size: 18px;
+    }
+
+    &.left {
+        border-bottom-left-radius: 30px;
+        border-top-left-radius: 30px;
+    }
+
+    &.right {
+        border-bottom-right-radius: 30px;
+        border-top-right-radius: 30px;
+    }
+}
+.layout-menu ul a .layout-submenu-toggler {
+    font-size: 100%;
+}
+.spanHover:hover{
+    background: var(--d-menuitem-hover-bg);
+}
+.spanHover.active-link{
+    background: var(--d-menuitem-hover-bg);
+}
+.my-pre {
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre-wrap;
+}

@@ -1,0 +1,18 @@
+<form [formGroup]="form">
+    <div class="grid" formResponsive width="450px">
+        <div class="col-12 md:col-12">
+            <div class="field p-fluid">
+                <label class="required block" for="email">
+                    {{'form_datasource.email' | translate}}
+                </label>
+                <input formControlName="email" formFieldValidation id="email" pInputText/>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="grid justify-content-end mt-2">
+    <button (click)="ref.close('Cancel')" class="p-button-outlined mr-2" icon="mdi mdi-close"
+            label="{{'common.cancel' | translate}}" pButton type="button"></button>
+    <button (click)="save()" [disabled]="form.invalid" class="p-button-outlined mr-2" icon="mdi mdi-check"
+            label="{{'common.save' | translate}}" pButton type="button"></button>
+</div>

@@ -1,0 +1,85 @@
+{
+    "common": {
+        "action": "Actions",
+        "language": "Language",
+        "signIn": "Sign In",
+        "back": "Back",
+        "yes": "Yes",
+        "no": "No",
+        "edit": "Edit",
+        "update": "Update",
+        "confirm": "Confirm",
+        "save": "Save",
+        "new": "New",
+        "create": "Create",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "clean": "Clear",
+        "quantity": "Count",
+        "blankSearch": "Empty result for: '{{value}}'",
+        "blankData": "There are no information",
+        "search": "Searching...",
+        "textConfirmDelete": "Are you sure?\nYou will not be able to reverse this!",
+        "paginator": "Show {{first}} - {{rows}} of {{total}} entry's",
+        "tooltip": {
+            "refresh": "Refresh all data",
+            "create": "Create new",
+            "edit": "Edit",
+            "delete": "Delete"
+        }
+    },
+    "results": {
+        "main_information": "Main Information",
+        "channels": "Channel Behavior",
+        "psychographic": "Psychographic",
+        "orientation": "Orientation",
+        "store": "Store",
+        "history": "History"
+    },
+    "networkError": {
+        "code0": "Unknown error",
+        "code400": "Invalid form, please try again",
+        "code401": "Session expired, please try again",
+        "code403": "Access denied",
+        "code405": "Method not allowed",
+        "code415": "File not supported",
+        "code422": "Unprocessable Entity",
+        "code500": "Unexpected error, try again later",
+        "code503": "Service unavailable, try again later",
+        "codeKeycloack": "Error connecting with authentication service"
+    },
+    "formError": {
+        "required": "Este campo é obrigatório",
+        "email": "Email é Inválido",
+        "mustMatch": "As senhas não correspondem",
+        "minlength": "Comprimento mínimo requerido {{value}}",
+        "conditionsRule": "Essa regra é inválida"
+    },
+    "menuUser": {
+        "logout": "Logout",
+        "profile": "Profile"
+    },
+    "menu": {
+        "datasource": "Datasource",
+        "datasource_settings": "Settings",
+        "datasource_config": "Configuration"
+    },
+    "static": {
+        "access": {
+            "title": "Access Denied",
+            "subTitle": "You don't have the required permissions. Please contact administrators."
+        },
+        "error": {
+            "title": "An error occurred",
+            "subTitle": "The requested resource is not available."
+        },
+        "notFound": {
+            "title": "Looks like you're lost",
+            "subTitle": "The requested resource is not available."
+        },
+        "common": {
+            "goTo": "Go back to homepage",
+            "version": "New platform version found"
+        }
+    }
+}

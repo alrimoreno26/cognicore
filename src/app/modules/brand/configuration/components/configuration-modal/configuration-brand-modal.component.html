@@ -1,0 +1,110 @@
+<form [formGroup]="form">
+    <div class="grid" formResponsive width="740px">
+        <div class="col-12 md:col-6">
+            <div class="field p-fluid">
+                <label class="required block" for="name">
+                    {{'form_datasource.name' | translate}}
+                </label>
+                <input formControlName="name" formFieldValidation id="name" pInputText/>
+            </div>
+        </div>
+        <div class="col-12 md:col-6">
+            <div class="field p-fluid">
+                <label class="required block" for="description">
+                    {{'form_datasource.description' | translate}}
+                </label>
+                <input formControlName="description" formFieldValidation id="description" pInputText/>
+            </div>
+        </div>
+        <div class="col-12 md:col-12">
+            <p-toolbar styleClass="gap-2 border-radius-0">
+                <ng-template pTemplate="left">
+                    <p>Adding properties for brand configuration</p>
+                </ng-template>
+                <ng-template pTemplate="right">
+                    <button pButton pRipple label="{{'common.new' | translate}}" icon="mdi mdi-plus" class="p-button-success mr-2"
+                            (click)="openNew()"></button>
+                </ng-template>
+            </p-toolbar>
+            <p-table
+                #dt
+                [value]="brand_fields"
+                [rows]="10"
+                [(selection)]="selected_fields"
+                [rowHover]="true"
+            >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="min-width:10rem">{{"form_datasource.table_label" | translate}}</th>
+                        <th style="min-width:10rem">{{"form_datasource.table_value" | translate}}</th>
+                        <th style="min-width:10rem">{{"form_datasource.table_default" | translate}}</th>
+                        <th style="min-width:10rem">{{"form_datasource.table_type" | translate}}</th>
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{ item.description }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.value }}</td>
+                        <td>{{ item.type }}</td>
+                        <td>
+                            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-primary mr-2"
+                                    (click)="editFields(item)"></button>
+                            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-danger"
+                                    (click)="deleteFields($event,item)"></button>
+                            <p-confirmPopup key="deleteProperty"></p-confirmPopup>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="4" class="justify-content-center text-2xl text-center">
+                            {{'common.blankData' | translate}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</form>
+<div class="grid justify-content-end mt-2">
+    <button (click)="ref.close('Cancel')" class="p-button-outlined mr-2" icon="mdi mdi-close"
+            label="{{'common.cancel' | translate}}" pButton type="button"></button>
+    <button (click)="save()" [disabled]="form.invalid" class="p-button-outlined mr-2" icon="mdi mdi-check"
+            label="{{'common.save' | translate}}" pButton type="button"></button>
+</div>
+
+<p-dialog [(visible)]="productDialog" [style]="{ width: '450px' }" header="{{'form_datasource.property'| translate}}"
+          [modal]="true"
+          styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="name">{{'form_datasource.name' | translate}}</label>
+            <input type="text" pInputText id="label" [(ngModel)]="fields_name_show" required/>
+            <small class="p-error" *ngIf="submitted && !fields_name_show">{{"form_datasource.error_label" |translate}}</small>
+        </div>
+        <div class="field">
+            <label for="name">{{'form_datasource.valor' | translate}}</label>
+            <input type="text" pInputText id="value" [(ngModel)]="fields_name" required/>
+            <small class="p-error" *ngIf="submitted && !fields_name">{{"form_datasource.error_value" |translate}}</small>
+        </div>
+        <div class="field">
+            <label for="name">{{'form_datasource.default_value' | translate}}</label>
+            <input type="text" pInputText id="default" [(ngModel)]="fields_default_value" required/>
+            <small class="p-error" *ngIf="submitted && !fields_default_value">{{"form_datasource.error_value" |translate}}</small>
+        </div>
+        <div class="field">
+            <label for="name">{{'form_datasource.tipo' | translate}}</label>
+            <p-dropdown [options]="types" [(ngModel)]="selected_types" optionLabel="name" appendTo="body"></p-dropdown>
+            <small class="p-error" *ngIf="submitted && !selected_types">{{"form_datasource.error_type" |translate}}</small>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="{{'common.cancel' | translate}}" icon="pi pi-times" class="p-button-outlined"
+                (click)="hideDialog()"></button>
+        <button pButton pRipple label="{{'common.save' | translate}}" icon="pi pi-check" class="p-button-outlined"
+                (click)="saveFields()"></button>
+    </ng-template>
+</p-dialog>
+

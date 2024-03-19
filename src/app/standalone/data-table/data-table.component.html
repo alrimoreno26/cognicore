@@ -1,0 +1,147 @@
+<div [ngClass]="{'justify-content-between': showCreate, 'justify-content-end': !showCreate}"
+     class="sm:flex align-items-center mb-3">
+  <button (click)="createItem()" *ngIf="showCreate && !itemsSplit?.length"
+          class="p-button-outlined" icon="pi {{iconCreate}}" label="{{'common.create' | translate}}"
+          pButton pTooltip="{{'common.tooltip.create' | translate: {value: (name | translate)} }}"
+          tooltipPosition="top" type="button"></button>
+  <p-splitButton (onClick)="createItem()" *ngIf="showCreate && itemsSplit?.length"
+                 [model]="itemsSplit" appendTo="body" icon="pi {{iconCreate}}" label="{{'common.create' | translate}}"
+                 pTooltip="{{'common.tooltip.create' | translate: {value: (name | translate)} }}"
+                 styleClass="p-button-outlined" tooltipPosition="top"
+  ></p-splitButton>
+  <div>
+    <span class="p-input-icon-left">
+      <i class="pi pi-magnify"></i>
+      <input #inputSearch (input)="setGlobalFilter($event, dt)" pInputText
+             placeholder="{{'common.search' | translate}}" type="text"/>
+    </span>
+    <button (click)="refreshContentData(dt)" class="ml-2 p-button-rounded p-button-text" icon="pi pi-replay" pButton
+            pTooltip="{{'common.tooltip.refresh' | translate}}" tooltipPosition="left" type="button"></button>
+    <button (click)="showPrintModal()" *ngIf="exportBtn" class="ml-2 p-button-rounded p-button-text"
+            icon="pi pi-table-arrow-down" pButton
+            pTooltip="{{'common.tooltip.print' | translate}}" tooltipPosition="left" type="button"></button>
+  </div>
+</div>
+<p-table #dt (onLazyLoad)="loadCustomLazy($event)" (onRowReorder)=rowReorder($event,dt) [columns]="headers"
+         [dataKey]="dataKey" [first]="service.pageRecord" [lazyLoadOnInit]="service.lazyLoadOnInit"
+         [lazy]="service.serverSide" [paginator]="pagination" [resizableColumns]="true"
+         [rowsPerPageOptions]="rowsPerPageOptions" [rows]="service.pageSize"
+         [totalRecords]="service.total$() | asyncNumber" [value]="service.listEntities$() | asyncTable"
+         responsiveLayout="scroll" styleClass=" {{class}}"
+>
+  <ng-template let-columns pTemplate="header">
+    <tr>
+      <th *ngIf="rowExpansion || rowDragAndDrop" [style.width.px]="50"></th>
+      <th *ngIf="rowDragAndDrop" class="text-center">No.</th>
+      <ng-template [ngForOf]="columns" let-item ngFor>
+        <ng-template [ngIfElse]="headWidthSort" [ngIf]="!item.sort">
+          <th [class]="item.class" [style.max-width.px]="item?.width">
+            {{item.header | translate}}
+          </th>
+        </ng-template>
+        <ng-template #headWidthSort>
+          <th [class]="item.class" [pSortableColumn]="item?.sortField ? item?.sortField : item.field"
+              [style.max-width.px]="item?.width">
+            {{item.header | translate}}
+            <p-sortIcon [field]="item?.sortField ? item?.sortField : item.field"></p-sortIcon>
+          </th>
+        </ng-template>
+      </ng-template>
+    </tr>
+  </ng-template>
+  <ng-template let-columns="columns" let-expanded="expanded" let-index="rowIndex" let-rowData pTemplate="body">
+    <tr [pReorderableRow]="index">
+      <td *ngIf="rowExpansion">
+        <button [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="rowData"
+                class="p-button-text p-button-rounded p-button-plain" pButton type="button"></button>
+      </td>
+      <ng-container *ngIf="rowDragAndDrop">
+        <td>
+          <span class="pi pi-drag-variant" pReorderableRowHandle></span>
+        </td>
+        <td class="text-center">
+          {{index + 1}}
+        </td>
+      </ng-container>
+      <td *ngFor="let col of columns" [class]="col.class" [style.max-width.px]="col?.width">
+        <!--Template por pipes-->
+        <ng-template [ngIfElse]="plainRowOrTemplate" [ngIf]="col?.pipe">
+          <c-show-value [data]="{value: rowData[col.field], pipe: col.pipe, extraVal: col?.extraVal}"/>
+        </ng-template>
+        <ng-template #plainRowOrTemplate>
+          <!--Template custom-->
+          <ng-container *ngIf="(contentChildren | rowTemplate: col.field) as template; else elsePlain">
+            <!--Custom action template-->
+            <ng-container *ngIf="col.field === 'action' && action; else noActionCol">
+              <!--External template-->
+              <ng-template [ngTemplateOutletContext]="{$implicit: rowData, column:col, rowIndex: index}"
+                           [ngTemplateOutlet]="template.template"/>
+              <!--Default action template-->
+              <ng-template [ngTemplateOutletContext]="{$implicit: rowData}" [ngTemplateOutlet]="staticActions"/>
+              <!--Default contextAction-->
+              <ng-template [ngIf]="contextAction">
+                <button (click)="setSelectedRow($event, rowData)" class="p-button-rounded p-button-text"
+                        icon="pi pi-dots-vertical" pButton type="button"></button>
+              </ng-template>
+            </ng-container>
+            <ng-template #noActionCol>
+              <!--Default other templates-->
+              <ng-container [ngTemplateOutletContext]="{$implicit: rowData, column:col, rowIndex: index}"
+                            [ngTemplateOutlet]="template.template"/>
+            </ng-template>
+          </ng-container>
+          <ng-template #elsePlain>
+            <ng-container *ngIf="col.field === 'action' && action; else plainRow">
+              <!--Default action template-->
+              <ng-template [ngTemplateOutletContext]="{$implicit: rowData}" [ngTemplateOutlet]="staticActions"/>
+              <!--Default contextAction-->
+              <ng-template [ngIf]="contextAction">
+                <button (click)="setSelectedRow($event, rowData)" class="p-button-rounded p-button-text"
+                        icon="pi pi-dots-vertical" pButton type="button"></button>
+              </ng-template>
+            </ng-container>
+            <ng-template #plainRow>
+              <!--Plain Row-->
+              {{rowData[col.field] | translate}}
+            </ng-template>
+          </ng-template>
+        </ng-template>
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template let-columns="columns" let-expand let-rowgroup="rowgroup" let-rowspan="rowspan" pTemplate="rowexpansion">
+    <ng-container [ngTemplateOutletContext]="{$implicit: expand, columns, rowspan, rowgroup}"
+                  [ngTemplateOutlet]="expansionRow.template"/>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td *ngIf="search" [attr.colspan]="rowExpansion ? headers.length  + 1: headers.length"
+          class="justify-content-center text-2xl text-center">
+        {{'common.blankSearch' | translate:{value: search} }}
+      </td>
+      <td *ngIf="!search" [attr.colspan]="rowExpansion ? headers.length  + 1: headers.length"
+          class="justify-content-center text-2xl text-center">
+        {{'common.blankData' | translate}}
+      </td>
+    </tr>
+  </ng-template>
+  <ng-template let-state pTemplate="paginatorright">
+    {{'common.paginator' | translate: {first: state.first, rows: state.rows, total: state.totalRecords} }}
+  </ng-template>
+</p-table>
+
+<p-menu #menu [model]="contextAction" [popup]="true" appendTo="body"/>
+
+<ng-template #staticActions let-rowData>
+  <button (click)="editItem(rowData)" *ngIf="showEdit" class="p-button-rounded p-button-text" icon="pi {{iconEdit}}"
+          pButton pTooltip="{{'common.tooltip.edit' | translate: {value: (name | translate)} }}" tooltipPosition="top"
+          type="button"></button>
+  <button (click)="deleteItem($event, rowData)" *ngIf="showDelete" class="p-button-rounded p-button-text"
+          icon="pi {{iconDelete}}"
+          pButton pTooltip="{{'common.tooltip.delete' | translate: {value: (name | translate)} }}" tooltipPosition="top"
+          type="button"></button>
+</ng-template>
+
+<!--Confirm dialog for delete action-->
+<p-confirmDialog [baseZIndex]="10000" [style]="{width: '30rem'}" key="deleteDataTable"
+                 rejectButtonStyleClass="p-button-text"></p-confirmDialog>

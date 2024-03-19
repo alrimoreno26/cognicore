@@ -1,0 +1,32 @@
+{
+  "table_data_config": {
+    "name": "Name",
+    "description": "Description",
+    "type": "Type"
+  },
+  "form_datasource": {
+    "name": "Name",
+    "email": "Email",
+    "label": "Label",
+    "tipo": "Type",
+    "default_value": "Default Value",
+    "valor": "Key of label",
+    "description": "Description",
+    "fields": "Adding properties for datasource connection",
+    "property": "Name of property",
+    "delete_confirmation": "Are you sure you want to delete ",
+    "config_cms": "Configuration of Datasource",
+    "config_crm": "Configuration of CRM",
+    "select_cms": "Select a CMS o CRM",
+    "select_crm": "Select a CRM",
+    "table_label": "Label",
+    "table_value": "Value",
+    "table_type": "Type",
+    "table_default": "Default Value",
+    "error_label": "Label is required",
+    "error_value": "Value is required",
+    "error_type": "Type is required"
+  },
+  "datasource_name": "Data Source Name",
+  "datasource_type": "Type"
+}

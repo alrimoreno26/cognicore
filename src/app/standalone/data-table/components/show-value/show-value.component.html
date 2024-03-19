@@ -1,0 +1,40 @@
+<ng-container *ngIf="data?.pipe">
+  <ng-container [ngTemplateOutletContext]="{data:data}" [ngTemplateOutlet]="pipes"></ng-container>
+</ng-container>
+<ng-container *ngIf="!data?.pipe">
+  {{data.value ? (data.value | translate) : "-" }}
+</ng-container>
+
+<ng-template #pipes let-data='data'>
+  <ng-template [ngIf]="data?.pipe === 'number'">
+    {{data.value | number}}
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'date'">
+    {{data.value | date:'dd/MM/YYYY' : '+0'}}
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'currency'">
+    {{data.value !== '-' ? (data.value | currency) : '-'}}
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'email'">
+    <a [href]="'mailto:' + data.value">{{data.value}}</a>
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'deep'">
+    {{data | deep}}
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'concat'">
+    {{(data?.extraVal + data.value) | translate}}
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'joinTextMap'">
+        <span *ngFor="let item of data.value; let i = index">
+            {{(data?.extraVal + item) | translate}}{{i !== (data.value.length - 1) ? ', ' : ''}}
+        </span>
+  </ng-template>
+  <ng-template [ngIf]="data?.pipe === 'wrapText'">
+    {{data.value | wrapText : data?.extraVal ? data?.extraVal : 60}}
+  </ng-template>
+  <!--  <ng-template [ngIf]="data?.pipe === 'file'">
+      <a (click)="service.download(data.value)" *ngIf="data.value" class="cursor-pointer">
+        <i class="mdi mdi-file-outline"></i> {{data.value.name}}
+      </a>
+    </ng-template>-->
+</ng-template>

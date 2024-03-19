@@ -1,0 +1,82 @@
+<form [formGroup]="form">
+    <div class="grid">
+        <div class="col-12 sm:col-6">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="field p-fluid mb-0">
+                        <label class="required block" for="name">
+                            {{'form_datasource.name' | translate}}
+                        </label>
+                        <input formControlName="name" formFieldValidation id="name" pInputText/>
+                    </div>
+                </div>
+                <div class="col-12 ">
+                    <div class="field p-fluid mb-0">
+                        <label class="required block" for="description">
+                            {{'form_datasource.description' | translate}}
+                        </label>
+                        <input formControlName="description" formFieldValidation id="description" pInputText/>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="field p-fluid mb-0">
+                        <p-panel header="{{'form_datasource.config_cms' | translate}}">
+                            <p-dropdown [options]="configurationService.listEntities$()"
+                                        formControlName="selectedDataSource" optionLabel="name"
+                                        [appendTo]="'body'"
+                                        (onChange)="reconstruct()"
+                                        placeholder="{{'form_datasource.select_cms' | translate}}">
+                                <ng-template let-selected pTemplate="selectedItem">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ selected.name }}-{{ selected.type }}</div>
+                                    </div>
+                                </ng-template>
+                                <ng-template let-list pTemplate="item">
+                                    <div class="flex align-items-center gap-2">
+                                        <div>{{ list.name }}-{{ list.type }}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                        </p-panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 sm:col-6">
+            <div class="grid">
+                <ng-template [ngIf]="selectedDataSource">
+                    <div class="col-12">
+                        <p-divider align="center">
+                            <span class="p-tag">Properties</span>
+                        </p-divider>
+                        <div class="field field-input flex flex-column" *ngFor="let field of configuration">
+                            <label for="{{field.name}}">{{field.nameShow}}</label>
+                            <ng-template [ngIf]="field.name ==='password'" [ngIfElse]="other">
+                                <p-password [inputStyleClass]="'w-full'"
+                                            styleClass="w-full"
+                                            class="w-full text size-12 secondary"
+                                            id="{{field.name}}" [formControlName]="field.name"
+                                            [toggleMask]="true"></p-password>
+                            </ng-template>
+                            <ng-template #other>
+                                <input pInputText id="{{field.name}}"
+                                       [formControlName]="field.name"
+                                       class="p-component p-element w-full text size-12 secondary"/>
+                            </ng-template>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+<div class="grid justify-content-end mt-2" *ngIf="showSaveBtn">
+    <button (click)="saveOrEdit()" [disabled]="form.invalid" class="p-button-outlined mr-2" icon="pi pi-check"
+            label="{{'common.save' | translate}}" pButton type="button"></button>
+</div>
+<p-confirmDialog header="Confirmation" key="deleteDatasource" icon="pi pi-exclamation-triangle"
+                 [style]="{width: '350px'}"></p-confirmDialog>

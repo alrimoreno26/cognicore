@@ -1,0 +1,184 @@
+<p-accordion class="w-full">
+    <p-accordionTab *ngFor="let gen of generations; let i = index"
+                    headerStyleClass="{{generations[i].checked ? 'activeAccordionCheck': 'inactiveAccordionCheck'}}">
+        <ng-template pTemplate="header">
+            <div class="align-items-center flex justify-content-between w-full gap-8">
+                <div class="flex align-items-center">
+                    <p class="vertical-align-middle font-light">
+                        <span class="font-bold">{{getPromptTooltip(gen.brand, gen.prompt)}}</span>
+                    </p>
+                </div>
+                <div>
+                    <ng-template [ngIf]="generations[i].checked" [ngIfElse]="notSelected">
+                        <p-button
+                            styleClass="text-2xl p-button-rounded p-button-sm btn-smart p-button-text p-button-raised shadow-none p-active"
+                            icon="pi pi-link">
+                        </p-button>
+                    </ng-template>
+                    <ng-template #notSelected>
+                        <p-button *ngIf="state !== 'error'"
+                                  styleClass="text-2xl p-button-rounded p-button-sm btn-smart p-button-text p-button-raised shadow-none"
+                                  icon="pi pi-check">
+                        </p-button>
+                        <p-button *ngIf="state === 'error'"
+                                  styleClass="text-2xl p-button-rounded p-button-sm btn-smart p-button-text p-button-raised shadow-none"
+                                  icon="pi pi-info-circle">
+                        </p-button>
+                    </ng-template>
+
+                </div>
+
+            </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+            <div class="flex" *ngIf="state !== 'error'">
+                <div class="flex-1 border-round box-generate">
+                    <div class="grid p-1">
+                        <div class="col-12">
+                            <div *ngIf="gen.title !== ''">
+                                <ng-template [ngIf]="!edited" [ngIfElse]="editing">
+                                    <p class="font-semibold mb-0 text-black-alpha-90">Title: </p>
+                                    <p class="font-semibold text-black-alpha-90">{{gen.title}}</p>
+                                </ng-template>
+                                <ng-template #editing>
+                  <textarea pInputTextarea [(ngModel)]="gen.title" class="w-full" [cols]="100"
+                            [rows]="2"></textarea>
+                                </ng-template>
+
+                            </div>
+                            <br/>
+                            <div *ngIf="gen.tagline !== ''">
+                                <ng-template [ngIf]="!edited" [ngIfElse]="editing">
+                                    <p class="font-semibold mb-0 text-black-alpha-90">Tagline: </p>
+                                    <p class="font-semibold text-black-alpha-90">{{gen.tagline}}</p>
+                                </ng-template>
+                                <ng-template #editing>
+                  <textarea pInputTextarea [(ngModel)]="gen.tagline" class="w-full" [cols]="100"
+                            [rows]="2"></textarea>
+                                </ng-template>
+                            </div>
+                            <br/>
+                            <div *ngIf="gen.campaign !== ''">
+                                <ng-template [ngIf]="!edited" [ngIfElse]="editing">
+                                    <p class="font-semibold mb-0 text-black-alpha-90">Campaign Message: </p>
+                                    <p class="font-semibold text-black-alpha-90">{{gen.campaign}}</p>
+                                </ng-template>
+                                <ng-template #editing>
+                  <textarea pInputTextarea [(ngModel)]="gen.campaign" class="w-full" [cols]="100"
+                            [rows]="5"></textarea>
+                                </ng-template>
+                            </div>
+                            <br/>
+                            <div *ngIf="gen.visuals !== ''">
+                                <ng-template [ngIf]="!edited" [ngIfElse]="editing">
+                                    <p class="font-semibold mb-0 text-black-alpha-90">Visuals Description: </p>
+                                    <p class="font-semibold text-black-alpha-90">{{gen.visuals}}</p>
+                                </ng-template>
+                                <ng-template #editing>
+                  <textarea pInputTextarea [(ngModel)]="gen.visuals" class="w-full" [cols]="100"
+                            [rows]="5"></textarea>
+                                </ng-template>
+                            </div>
+                            <br/>
+                            <div *ngIf="gen.hashtags.length > 0">
+                                <p class="font-semibold mb-0 text-black-alpha-90">Hashtags</p>
+                                <p-tag class="mr-2" *ngFor="let t of gen.hashtags" value="{{t}}"></p-tag>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 border-round box-generate ml-2"
+                     *ngIf="gen.images.length > 0 && gen.images[0].itemImageSrc !== 'null'">
+                    <div class="flex align-items-center h-full flex-column">
+                        <img src="{{gen.images[0].itemImageSrc}}" alt="{{gen.images[0].alt}}"
+                             style="max-width: 100%; margin: auto;">
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex gap-2 justify-content-between ng-star-inserted" >
+                <div class="flex flex-1 p-2 justify-content-between align-items-center" style="background: #fafafc;">
+                    <div class="flex gap-2">
+                        <ng-template [ngIf]="!edited" [ngIfElse]="btnActionEdit">
+                            <div id="area-refresh" pTooltip="Refresh" tooltipPosition="top">
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    icon="pi pi-refresh">
+                                </p-button>
+                            </div>
+                            <div id="area-prompt1" pTooltip="Search" tooltipPosition="top">
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    icon="pi pi-search">
+                                </p-button>
+                            </div>
+                            <div id="area-pencil" pTooltip="Edit" tooltipPosition="top">
+                                <p-button
+                                    class="border-round-3xl"
+                                    (click)="editVersion($event, i)"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    icon="pi pi-pencil">
+                                </p-button>
+                            </div>
+                        </ng-template>
+                        <ng-template #btnActionEdit>
+                            <div id="area-cancel-edit" class="pl-3" pTooltip="Cancel" tooltipPosition="top">
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    (click)="cancelEdit($event, i)"
+                                    icon="pi pi-times">
+                                </p-button>
+                            </div>
+                            <div id="area-save-edit" class="pl-3" pTooltip="Save" tooltipPosition="top">
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    (click)="saveEdit($event, i)"
+                                    icon="pi pi-check">
+                                </p-button>
+                            </div>
+                        </ng-template>
+
+                    </div>
+                    <div *ngIf="!edited">
+                        <div id="area-check" class="pl-3" pTooltip="Check" tooltipPosition="top"
+                             (click)="checkVersion($event, i)">
+                            <ng-template [ngIf]="generations[i].checked" [ngIfElse]="notSelected">
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded active btn-round-custom btn-degraded p-button-text p-button-raised"
+                                    icon="pi pi-check">
+                                </p-button>
+                            </ng-template>
+                            <ng-template #notSelected>
+                                <p-button
+                                    class="border-round-3xl"
+                                    styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                                    icon="pi pi-check">
+                                </p-button>
+                            </ng-template>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-1 p-2 align-items-center gap-3" id="area-refresh-image" style="background: #fafafc;"
+                     *ngIf="gen.images.length > 0 && gen.images[0].itemImageSrc !== 'null'">
+                    <p-button
+                        pTooltip="Refresh Image"
+                        tooltipPosition="top"
+                        class="border-round-3xl"
+                        *ngIf="!generatingImage(i)"
+                        (click)="newImage($event, i)"
+                        styleClass="p-button-rounded btn-round-custom p-button-text p-button-raised"
+                        icon="pi pi-refresh">
+                    </p-button>
+                    <i *ngIf="generatingImage(i)" class="pi pi-spin pi-spinner" style="font-size: 2rem; color: #0b7ad1;font-weight: 900;"></i>
+                    <p *ngIf="generatingImage(i)" class="text-black-alpha-80">Generating new image...</p>
+                </div>
+            </div>
+        </ng-template>
+    </p-accordionTab>
+</p-accordion>

@@ -1,0 +1,123 @@
+<p-dialog id="dialog-email-error" [modal]="true" [header]="nameDialog"
+          [closable]="false" [(visible)]="showDialog" [breakpoints]="{'960px': '75vw'}"
+          [draggable]="false" [resizable]="false" [style]="{'width': '600px', 'height': '600px'}">
+    <div *ngIf="!showListBusiness" class="flex flex-column gap-3">
+        <p class="text size-14 mb-0">Welcome to Cognicore. Please select your business.</p>
+        <div class="flex flex-wrap gap-1 card-container blue-container justify-content-center">
+            <ng-template [ngIf]="businessService.listElements$().length === 0" [ngIfElse]="data">
+                <p-skeleton *ngFor="let pro of skeleton"
+                            styleClass="flex flex-column container-project card align-items-center justify-content-center font-bold m-2 text-white border-round"
+                            width="120px"
+                            height="120px">
+                </p-skeleton>
+            </ng-template>
+            <ng-template #data>
+                <div class="w-full grid -mt-3 -ml-3 -mr-3" *ngIf="listBusiness.owner.length > 0">
+                    <p-divider class="col-12 lg:col-12 p-0" align="center">
+                        <span class="p-tag">Business Owner</span>
+                    </p-divider>
+                    <div class="col-12 md:col-4 lg:col-3 p-0" *ngFor="let pro of listBusiness.owner"
+                         (click)="selectBusiness($event, pro)" style="width: 140px;max-width: 140px;">
+                        <div class="p-2">
+                            <div class="shadow-2 p-4 surface-card border-round flex flex-column align-items-center">
+                                <div class="relative mb-3">
+                                    <p-avatar label="{{pro.name.charAt(0)}}"
+                                              size="large"
+                                              shape="circle"
+                                              class="p-element"
+                                              styleClass="avatar_color">
+                                    </p-avatar>
+                                </div>
+                                <div class="flex justify-content-between align-items-center mb-3">
+                                    <span class="text-900 font-medium text-xl cursor-pointer" pTooltip="{{pro.name}}" style="word-break: break-all">{{pro.name | wrapText:7}}</span>
+                                </div>
+                                <div class="flex w-full justify-content-end">
+                                    <i (click)="deleteBusiness($event,pro.id)"  class="flex pi pi-trash layout-submenu-toggler text-red-700 cursor-pointer"
+                                       ></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 md:col-4 lg:col-3 p-0"
+                         (click)="addNewBusiness()"
+                          style="width: 140px;max-width: 140px;">
+                        <div class="p-2">
+                            <div class="shadow-2 p-4 surface-card border-round flex flex-column align-items-center">
+                                <div class="relative mb-3">
+                                    <p-avatar label="+"
+                                              size="large"
+                                              shape="circle"
+                                              class="p-element"
+                                              styleClass="avatar_color">
+                                    </p-avatar>
+                                </div>
+                                <div class="flex justify-content-between align-items-center mb-3">
+                                    <span class="text-900 font-medium text-xl cursor-pointer" style="word-break: break-all">Add</span>
+                                </div>
+                                <div class="flex w-full justify-content-end p-2">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full grid -mt-3 -ml-3 -mr-3" *ngIf="listBusiness.analysts.length > 0">
+                    <p-divider class="col-12 lg:col-12 p-0" align="center">
+                        <span class="p-tag">Business Analyst</span>
+                    </p-divider>
+                    <div class="col-12 md:col-4 lg:col-3 p-0" *ngFor="let pro of listBusiness.analysts"
+                         (click)="selectBusinessAnalyst($event, pro)" style="width: 140px;max-width: 140px;">
+                        <div class="p-2">
+                            <div class="shadow-2 p-4 surface-card border-round flex flex-column align-items-center">
+                                <div class="relative mb-3">
+                                    <p-avatar label="{{pro.name.charAt(0)}}"
+                                              size="large"
+                                              shape="circle"
+                                              class="p-element"
+                                              styleClass="avatar_color">
+                                    </p-avatar>
+                                </div>
+                                <div class="flex justify-content-between align-items-center mb-3">
+                                    <span class="text-900 font-medium text-xl cursor-pointer" pTooltip="{{pro.name}}" style="word-break: break-all">{{pro.name | wrapText:7}}</span>
+                                </div>
+                                <div class="flex w-full justify-content-end">
+                                    <i (click)="deleteBusiness($event,pro.id)"  class="flex pi pi-trash layout-submenu-toggler text-red-700 cursor-pointer"
+                                       ></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div *ngIf="showListBusiness">
+        <ng-template [ngIf]="!showCreateWorkspace">
+            <p class="text size-14 mb-0">Texto de bienvenida explicativo y seleccion de workspace</p>
+            <div class="flex flex-wrap card-container blue-container">
+                <ng-template [ngIf]="selectedBusiness.workspaces.length > 0">
+                    <div
+                        class="flex flex-column container-project card align-items-center justify-content-center font-bold text-white border-round"
+                        style="max-width: 170px; min-width: 170px;"
+                        *ngFor="let wk of selectedBusiness.workspaces" (click)="applyWorkspace(wk)">
+                        <p-avatar label="{{wk.name.charAt(0)}}"
+                                  size="large"
+                                  shape="circle"
+                                  class="p-element"
+                                  styleClass="avatar_color">
+                        </p-avatar>
+                        <h6 class="text-center text-black-alpha-90">{{wk.name}}</h6>
+                    </div>
+                </ng-template>
+            </div>
+        </ng-template>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple (click)="goBack()" label="Logout"
+                styleClass="p-button-text"
+                class="justify-content-center primary text-blue-900 bg-white border-black-alpha-10 no_hover otherks btn-box">
+        </button>
+    </ng-template>
+</p-dialog>
+<p-confirmDialog header="Confirmation" key="deleteElement" icon="pi pi-exclamation-triangle"
+                 [style]="{width: '350px'}"></p-confirmDialog>
